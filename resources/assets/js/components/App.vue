@@ -1,20 +1,5 @@
 <style scoped>
-.user{
-    font-size: 14px;
-    margin: -4px;
-    border-right: 3px solid #60DF88 !important;
-    padding: 5px;
-    background-color: rgb(239, 255, 241);
-}
 
-.admin{
-    font-size: 14px;
-    margin: -4px;
-    border-left: 3px solid rgb(255, 112, 0) !important;
-    padding: 5px;
-    padding-left:10px;
-    background-color: rgb(247, 247, 214);
-}
 
 .chat-window {
     width:300px;
@@ -40,8 +25,9 @@
     <div>
 
         <div v-if="!chatId">
-            <label for="name">Email <input id="email" type="email" v-model="email"></label>
-            <label for="name">Name <input id="name" type="name" v-model="name"></label>
+            <label for="name">Email <input @keyup.enter="initChat" id="email" type="email" v-model="email"></label>
+            <label for="name">Name <input @keyup.enter="initChat" id="name" type="text" v-model="name"></label>
+            <label for="name">Message <textarea id="message" v-model="initialMessage"></textarea></label>
             <button class="btn btn-primary" @click="initChat">+</button>
         </div>
         <div v-else>
@@ -55,16 +41,7 @@
                     </div>
 
                     <div class="chat-box" id="chat-box">
-                        <div class="message" v-for="message in messages">
-                            <div class="panel-body">
-                                <div class="clearfix">
-                                    <blockquote class="pull-right"
-                                                :class="[{admin: message.person_id != personId}, {user:  message.person_id == personId}]">
-                                        {{ message.message }}
-                                    </blockquote>
-                                </div>
-                            </div>
-                        </div>
+                        <chat-message :messages="messages" :personId="personId"></chat-message>
                     </div>
                     <input class="chat-input" type="text" v-model="currentChatMessage" @keyup.enter="submitChat">
                 </div>
@@ -87,7 +64,8 @@
                 name: '',
                 online: true,
                 messagePerson: false,
-                currentChatMessage: ''
+                currentChatMessage: '',
+                initialMessage: ''
             }
 
         },
@@ -133,7 +111,7 @@
             getChat(){
                 var $this = this;
 
-                this.$http.get('http://chatservice.dev/api/chatMessage', {params:  {id: this.chatId}})
+                this.$http.get('http://chatservice.dev/api/chat/' + this.chatId)
                     .then(response =>{
                             this.messages = response.data.data;
                             setTimeout(function(){

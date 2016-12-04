@@ -32,6 +32,18 @@ class ChatController extends BaseController
         return $this->createSuccessResponse( $object, 201 );
     }
 
+    /**
+     * Get chat by ID
+     * @param $id
+     *
+     * @return mixed
+     */
+    protected function getById($id)
+    {
+        $messages = call_user_func(array($this->model, 'find'), $id)->chatMessages()->getResults();
+        return $messages;
+    }
+
 
 
 

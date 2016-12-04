@@ -56,7 +56,9 @@ class ChatMessageController extends BaseController
     public function show($id)
     {
 
-        $data = call_user_func(array($this->model, 'find'), $id)->all();
+
+
+        $data = call_user_func(array($this->model, 'find'), $id)->chat;
         if ($data) {
             return $this->createSuccessResponse($data);
         }
