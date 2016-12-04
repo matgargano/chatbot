@@ -1,0 +1,21 @@
+
+// Fonts
+@import url(https://fonts.googleapis.com/css?family=Raleway:300,400,600);
+
+// Variables
+@import "variables";
+
+// Bootstrap
+@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
+
+.outer-wrap {
+  position:relative;
+}
+
+.chat {
+
+  position:fixed;
+  bottom:50px;
+  right:50px;
+
+}
