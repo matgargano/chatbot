@@ -27,7 +27,6 @@
         <div v-if="!chatId">
             <label for="name">Email <input @keyup.enter="initChat" id="email" type="email" v-model="email"></label>
             <label for="name">Name <input @keyup.enter="initChat" id="name" type="text" v-model="name"></label>
-            <label for="name">Message <textarea id="message" v-model="initialMessage"></textarea></label>
             <button class="btn btn-primary" @click="initChat">+</button>
         </div>
         <div v-else>
@@ -65,7 +64,7 @@
                 online: true,
                 messagePerson: false,
                 currentChatMessage: '',
-                initialMessage: ''
+
             }
 
         },
@@ -161,6 +160,3 @@
 
 
 </script>
-
-<style>
-</style>

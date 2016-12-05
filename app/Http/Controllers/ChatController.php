@@ -40,7 +40,7 @@ class ChatController extends BaseController
      */
     protected function getById($id)
     {
-        $messages = call_user_func(array($this->model, 'find'), $id)->chatMessages()->getResults();
+        $messages = call_user_func(array($this->model, 'find'), $id)->chatMessages()->with('person')->getResults();
         return $messages;
     }
 
