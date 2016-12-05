@@ -69,7 +69,7 @@
                 personId: '',
                 email: '',
                 name: '',
-                online: true,
+                online: true, // this can be modified
                 messagePerson: false,
                 currentChatMessage: '',
                 reloadChatTimer: null,
