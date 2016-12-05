@@ -15,6 +15,11 @@
     overflow-y:auto;
 }
 
+.error {
+    color:#FF0000;
+}
+
+
 
 
 
@@ -25,6 +30,9 @@
     <div>
 
         <div v-if="!chatId">
+            <div class="error" v-if="errorMsg">
+                {{ errorMsg }}
+            </div>
             <label for="name">Email <input @keyup.enter="initChat" id="email" type="email" v-model="email"></label>
             <label for="name">Name <input @keyup.enter="initChat" id="name" type="text" v-model="name"></label>
             <button class="btn btn-primary" @click="initChat">+</button>
@@ -64,7 +72,8 @@
                 online: true,
                 messagePerson: false,
                 currentChatMessage: '',
-                reloadChatTimer: null
+                reloadChatTimer: null,
+                errorMsg: ''
 
             }
 
@@ -84,7 +93,19 @@
                 objDiv.scrollTop = objDiv.scrollHeight;
 
             },
+            clearError(){
+                this.errorMsg = '';
+            },
+            setErrorMsg(msg){
+                this.errorMsg = msg;
+            },
             initChat(){
+                this.clearError();
+                if(!this.name||!this.email) {
+                    this.setErrorMsg('Please fill out both fields');
+                    return;
+                }
+
                 this.$http.post('http://chatservice.dev/api/person', {
                     name: this.name,
                     email: this.email
@@ -99,11 +120,11 @@
 
                         }, error => {
                             //@todo error handling?
-                            console.log(error);
+                            console.log(error.body.message);
                         });
                     }, error => {
                         //@todo error handling?
-                        console.log(error);
+                        this.setErrorMsg(error.body.message);
                     });
 
 
@@ -166,6 +187,7 @@
 
 
 }
+
 
 
 

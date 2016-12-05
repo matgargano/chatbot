@@ -38,7 +38,7 @@ class PersonController extends BaseController
         } catch (\Exception $ex) {
             $message = $ex->getMessage();
 
-            return $this->createErrorResponse($message, 500);
+            return $this->createErrorResponse($message, 422);
         }
 
         $object = call_user_func(array($this->model, 'create'), $request->toArray());
