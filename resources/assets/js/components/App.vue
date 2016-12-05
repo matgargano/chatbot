@@ -64,6 +64,7 @@
                 online: true,
                 messagePerson: false,
                 currentChatMessage: '',
+                reloadChatTimer: null
 
             }
 
@@ -74,6 +75,7 @@
             this.validateChat();
             if(this.chatId && this.personId){
                 this.getChat();
+                this.reloadChat();
             }
         },
         methods: {
@@ -103,6 +105,8 @@
                         //@todo error handling?
                         console.log(error);
                     });
+
+
 
 
 
@@ -147,6 +151,13 @@
                                     //@todo error handling?
                                     console.log(error);
                                 });
+            },
+            reloadChat(){
+                if (!this.reloadChatTimer) {
+                    this.reloadChatTimer = setInterval(function(){
+                            this.getChat();
+                        }.bind(this), 5000);
+                }
             }
 
 
