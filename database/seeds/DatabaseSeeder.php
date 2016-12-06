@@ -22,7 +22,18 @@ class DatabaseSeeder extends Seeder
             'name'     => $faker->name,
             'email'    => $faker->email,
         ]);
+        DB::table('people')->insert([
+            'name'     => $faker->name,
+            'email'    => $faker->email,
+        ]);
+        DB::table('people')->insert([
+            'name'     => $faker->name,
+            'email'    => $faker->email,
+        ]);
 
+        DB::table('chats')->insert([
+            'active'     => true,
+        ]);
         DB::table('chats')->insert([
             'active'     => true,
         ]);
@@ -43,6 +54,30 @@ class DatabaseSeeder extends Seeder
         ]);
         DB::table('chat_messages')->insert([
             'chat_id'     => 1,
+            'person_id' => 1,
+            'message' => $faker->sentence
+        ]);
+
+        ///
+
+
+        DB::table('chat_messages')->insert([
+            'chat_id'     => 2,
+            'person_id' => 1,
+            'message' => $faker->sentence
+        ]);
+        DB::table('chat_messages')->insert([
+            'chat_id'     => 2,
+            'person_id' => 2,
+            'message' => $faker->sentence
+        ]);
+        DB::table('chat_messages')->insert([
+            'chat_id'     => 2,
+            'person_id' => 2,
+            'message' => $faker->sentence
+        ]);
+        DB::table('chat_messages')->insert([
+            'chat_id'     => 2,
             'person_id' => 1,
             'message' => $faker->sentence
         ]);
