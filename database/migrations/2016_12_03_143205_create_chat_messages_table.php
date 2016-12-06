@@ -18,6 +18,9 @@ class CreateChatMessagesTable extends Migration
             $table->integer('chat_id')->unsigned();
             $table->integer('person_id')->unsigned();
             $table->text('message');
+            $table->foreign('chat_id')
+                  ->references('id')->on('chats')
+                  ->onDelete('cascade');
             $table->timestamps();
         });
     }
