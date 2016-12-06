@@ -102,7 +102,7 @@ class ChatController extends BaseController
      */
     protected function getByIdWithPeopleObjects($id)
     {
-        $messages = call_user_func(array($this->model, 'find'), $id)->chatMessages()->with('person')->getResults();q
+        $messages = call_user_func(array($this->model, 'find'), $id)->chatMessages()->with('person')->getResults();
         return $messages;
     }
 
