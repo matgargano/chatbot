@@ -39,7 +39,7 @@ export const dataBus = new Vue({
                     }.bind(this), 1); // push to the bottom of the execution stack
                 }, error => {
                     //@todo error handling?
-                    console.log(error);
+                    console.log(error.body.message);
                 });
 
         },
