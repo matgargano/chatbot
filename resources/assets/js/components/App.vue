@@ -48,7 +48,7 @@
                     </div>
 
                     <div class="chat-box" id="chat-box">
-                        <chat-message :messages="messages" :personId="personId"></chat-message>
+                        <chat-message-wrap :messages="messages" :currentPersonId="currentPersonId"></chat-message-wrap>
                     </div>
                     <input class="chat-input" type="text" v-model="currentChatMessage" @keyup.enter="submitChat">
                 </div>
@@ -66,7 +66,7 @@
            return {
                 chatId: '',
                 messages: [],
-                personId: '',
+                currentPersonId: '',
                 email: '',
                 name: '',
                 online: true, // this can be modified
@@ -80,11 +80,12 @@
         },
         created(){
             this.chatId = this.$cookie.get('chat');
-            this.personId = this.$cookie.get('person');
+            this.currentPersonId = this.$cookie.get('person');
             this.validateChat();
-            if(this.chatId && this.personId){
+            if(this.chatId && this.currentPersonId){
                 this.getChat();
                 this.reloadChat();
+
             }
         },
         methods: {
@@ -111,12 +112,13 @@
                     email: this.email
                 })
                 .then(response =>{
-                    this.personId = response.body.data.id;
-                    this.$cookie.set('person', this.personId, 1);
+                    this.currentPersonId = response.body.data.id;
+                    this.$cookie.set('person', this.currentPersonId, 1);
                     this.$http.post('http://chatservice.dev/api/chat')
                         .then(response =>{
                                 this.chatId = response.body.data.id;
                                 this.$cookie.set('chat', this.chatId, 1);
+                                this.reloadChat();
 
                         }, error => {
                             //@todo error handling?
@@ -152,7 +154,7 @@
             },
             isUser(person){
                 this.messagePerson = false;
-                if(user === this.personId){
+                if(user === this.currentPersonId){
                     this.messagePerson = true;
                 }
 
@@ -163,7 +165,7 @@
                 this.$http.post('http://chatservice.dev/api/chatMessage',
                             {
                                 chat_id: this.chatId,
-                                person_id: this.personId,
+                                person_id: this.currentPersonId,
                                 message: chatMessage
                             })
                             .then(response =>{

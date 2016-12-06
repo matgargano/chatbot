@@ -18,37 +18,24 @@
     float:left;
 }
 
+
 </style>
 <template>
 
-    <div>
-
-
-        <div class="message" v-for="(message,index) in messages">
-            <div v-if="index === 0">
-                <div class="panel-body">
-                    welcome to chat
-                </div>
-            </div>
-            <div class="panel-body">
-                <div class="clearfix">
-                    <blockquote
-                            :class="[{admin: message.person.id != personId}, {user:  message.person.id == personId}]">
-                        {{ message.person.name }} - {{ message.message }}<br>
-                        {{ message.created_at }}
-                    </blockquote>
-                </div>
-            </div>
-        </div>
-    </div>
+    <blockquote
+            :class="[{admin: message.person.id != currentPersonId}, {user:  message.person.id == currentPersonId}]">
+        {{ message.person.name }} - {{ message.message }}<br>
+        {{ message.created_at }}
+    </blockquote>
 </template>
-
 <script>
     export default {
 
-        props: ['messages', 'personId']
+        props: ['message', 'currentPersonId'],
+
 
     }
+
 
 
 
