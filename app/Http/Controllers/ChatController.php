@@ -40,7 +40,7 @@ class ChatController extends BaseController
      *
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Request $request, $id)
     {
         $data = $this->getByIdWithPeopleObjects($id); // pull through people objects
         if ($data) {
@@ -102,7 +102,7 @@ class ChatController extends BaseController
      */
     protected function getByIdWithPeopleObjects($id)
     {
-        $messages = call_user_func(array($this->model, 'find'), $id)->chatMessages()->with('person')->getResults();
+        $messages = call_user_func(array($this->model, 'where'), 'chat_id', $id)->chatMessages()->with('person')->getResults();
         return $messages;
     }
 
