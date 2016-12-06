@@ -5,6 +5,7 @@ Vue.component('chat-message', require('./components/ChatMessage.vue'));
 Vue.component('chat-message-wrap', require('./components/ChatMessageWrap.vue'));
 Vue.component('new-chat-module', require('./components/NewChatModule.vue'));
 Vue.component('chat-message-input', require('./components/ChatMessageInput.vue'));
+Vue.component('chat-online-status', require('./components/ChatOnlineStatus.vue'));
 
 export const dataBus = new Vue({
 
@@ -14,8 +15,7 @@ export const dataBus = new Vue({
             messages: [],
             reloadChatTimer: null,
             chatId : null,
-            currentPersonId: null,
-            online: true // use REST to set/retrieve this
+            currentPersonId: null
 
         }
     },

@@ -8,19 +8,25 @@
         overflow-y:auto;
     }
 
+
 </style>
 
 <template>
-
-    <div class="chat-box" id="chat-box">
-        <div class="initial-message">Chat started</div>
-        <div class="message" v-for="message in messages">
-            <div class="panel-body">
-                <div class="clearfix">
-                    <chat-message :message="message">
-                    </chat-message>
+    <div class="chat-window">
+        <div class="panel panel-primary">
+            <chat-online-status></chat-online-status>
+            <div class="chat-box" id="chat-box">
+                <div class="initial-message">Chat started</div>
+                <div class="message" v-for="message in messages">
+                    <div class="panel-body">
+                        <div class="clearfix">
+                            <chat-message :message="message">
+                            </chat-message>
+                        </div>
+                    </div>
                 </div>
             </div>
+            <chat-message-input></chat-message-input>
         </div>
     </div>
 </template>
@@ -47,6 +53,7 @@
 
 
     }
+
 
 
 
