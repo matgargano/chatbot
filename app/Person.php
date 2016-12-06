@@ -6,7 +6,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class Person extends Model
 {
-    protected $fillable = [ 'name', 'email' ];
+    protected $fillable = ['name', 'email'];
+
+    protected $guarded = ['admin'];
+
+    protected $casts = [
+        'admin' => 'boolean',
+    ];
 
     public function chatMessages()
     {

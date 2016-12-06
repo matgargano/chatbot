@@ -27,6 +27,7 @@
                 </div>
             </div>
             <chat-message-input></chat-message-input>
+
         </div>
     </div>
 </template>

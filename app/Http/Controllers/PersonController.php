@@ -42,6 +42,26 @@ class PersonController extends BaseController
         }
 
         $object = call_user_func(array($this->model, 'create'), $request->toArray());
-        return $this->createSuccessResponse( $object, 201 );
+
+        return $this->createSuccessResponse($object, 201);
+    }
+
+    /**
+     * @param Request $request
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function index(Request $request)
+    {
+        if ($request->input('admin')) {
+            $objects = call_user_func(array($this->model, 'where'), 'admin', 1)->get();
+        } else {
+
+            $objects = call_user_func(array($this->model, 'all'));
+
+        }
+
+        return $this->createSuccessResponse($objects);
+
     }
 }
