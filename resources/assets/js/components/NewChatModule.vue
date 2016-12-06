@@ -69,7 +69,7 @@
                     }, error => {
 
                         //@todo error handling?
-                        this.setErrorMsg(error);
+                        this.setErrorMsg(error.body.message);
                     });
 
 
