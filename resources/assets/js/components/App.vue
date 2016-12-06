@@ -22,7 +22,7 @@
     export default {
         data(){
             return {
-                chatId: null,
+                chatId: dataBus.chatId,
 
 
             };
@@ -35,6 +35,11 @@
             dataBus.currentPersonId = this.$cookie.get('person');
             this.chatId = dataBus.chatId;
             dataBus.$emit('registeredChat');
+
+            dataBus.$on('registeredChat', function() {
+                console.log('motha');
+                this.chatId = dataBus.chatId;
+            }.bind(this));
         }
 
     }
