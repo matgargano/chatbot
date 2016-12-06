@@ -10,6 +10,7 @@
         <div class="error" v-if="errorMsg">
             {{ errorMsg }}
         </div>
+        <p>To chat with a rep, enter your name & email and click the plus sign below</p>
         <label for="name">Email <input @keyup.enter="setChatData" id="email" type="email" v-model="email"></label>
         <label for="name">Name <input @keyup.enter="setChatData" id="name" type="text" v-model="name"></label>
         <button class="btn btn-primary" @click="setChatData">+</button>
