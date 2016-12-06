@@ -1,7 +1,7 @@
 <?php
 
 Route::resource('chats', 'ChatController', [
-    'except' => ['destroy', 'update', 'edit', 'create']
+    'except' => ['update', 'edit', 'create']
 ]);
 
 Route::resource('chatMessages', 'ChatMessageController', [

@@ -34,20 +34,6 @@ class ChatController extends BaseController
     }
 
     /**
-     * Get chat by ID
-     *
-     * @param $id
-     *
-     * @return mixed
-     */
-    protected function getById($id)
-    {
-        $messages = call_user_func(array($this->model, 'find'), $id)->chatMessages()->with('person')->getResults();
-
-        return $messages;
-    }
-
-    /**
      * Display a listing of the resource.
      *
      * @param Request $request
@@ -71,6 +57,22 @@ class ChatController extends BaseController
         }
 
         return $this->createSuccessResponse($chats);
+
+    }
+
+    public function destroy($id)
+    {
+
+        $data = $this->getById( $id );
+
+        if ( $data ) {
+
+            $data->delete();
+
+            return $this->createSuccessResponse( $data );
+        }
+
+        return $this->createErrorResponse( $this->doesNotExist( $id ), 404 );
 
     }
 

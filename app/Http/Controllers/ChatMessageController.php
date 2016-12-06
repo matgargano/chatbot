@@ -48,15 +48,13 @@ class ChatMessageController extends BaseController
 
     /**
      * Display the specified resource.
+     * @param Request $request
+     * @param int $id
      *
-     * @param  int $id
-     *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function show($id)
+    public function show(Request $request, $id)
     {
-
-
 
         $data = call_user_func(array($this->model, 'find'), $id)->chat;
         if ($data) {
