@@ -46,7 +46,7 @@
 
                                     }, error => {
                                         //@todo error handling?
-                                        console.log(error);
+                                        console.log(error.body.message);
                                     });
             },
 

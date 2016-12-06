@@ -37,7 +37,6 @@
             dataBus.$emit('registeredChat');
 
             dataBus.$on('registeredChat', function() {
-                console.log('motha');
                 this.chatId = dataBus.chatId;
             }.bind(this));
         }
