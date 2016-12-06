@@ -25,17 +25,14 @@
 
 
 
+
+
 </style>
 <template>
     <div>
 
         <div v-if="!chatId">
-            <div class="error" v-if="errorMsg">
-                {{ errorMsg }}
-            </div>
-            <label for="name">Email <input @keyup.enter="initChat" id="email" type="email" v-model="email"></label>
-            <label for="name">Name <input @keyup.enter="initChat" id="name" type="text" v-model="name"></label>
-            <button class="btn btn-primary" @click="initChat">+</button>
+            <new-chat-module></new-chat-module>
         </div>
         <div v-else>
 
@@ -60,6 +57,10 @@
 </template>
 
 <script>
+
+    import {dataBus} from "../app";
+
+
     export default {
 
         data(){
@@ -67,75 +68,40 @@
                 chatId: '',
                 messages: [],
                 currentPersonId: '',
-                email: '',
-                name: '',
                 online: true, // this can be modified
                 messagePerson: false,
                 currentChatMessage: '',
                 reloadChatTimer: null,
-                errorMsg: ''
+
 
             }
 
         },
         created(){
+
+
+            dataBus.$on('registeredChat', (chatId, currentPersonId) =>{
+                this.chatId = chatId;
+                this.currentPersonId = currentPersonId;
+                this.startChat(this.chatId, this.currentPersonId);
+            });
+
             this.chatId = this.$cookie.get('chat');
             this.currentPersonId = this.$cookie.get('person');
-            this.validateChat();
-            if(this.chatId && this.currentPersonId){
-                this.getChat();
-                this.reloadChat();
+            dataBus.$emit('registeredChat', this.chatId, this.currentPersonId);
 
-            }
+
+
         },
         methods: {
+
             scrollBottom(){
                 var objDiv = document.getElementById("chat-box");
                 objDiv.scrollTop = objDiv.scrollHeight;
 
             },
-            clearError(){
-                this.errorMsg = '';
-            },
-            setErrorMsg(msg){
-                this.errorMsg = msg;
-            },
-            initChat(){
-                this.clearError();
-                if(!this.name||!this.email) {
-                    this.setErrorMsg('Please fill out both fields');
-                    return;
-                }
-
-                this.$http.post('http://chatservice.dev/api/person', {
-                    name: this.name,
-                    email: this.email
-                })
-                .then(response =>{
-                    this.currentPersonId = response.body.data.id;
-                    this.$cookie.set('person', this.currentPersonId, 1);
-                    this.$http.post('http://chatservice.dev/api/chat')
-                        .then(response =>{
-                                this.chatId = response.body.data.id;
-                                this.$cookie.set('chat', this.chatId, 1);
-                                this.reloadChat();
-
-                        }, error => {
-                            //@todo error handling?
-                            console.log(error.body.message);
-                        });
-                    }, error => {
-                        //@todo error handling?
-                        this.setErrorMsg(error.body.message);
-                    });
-
-
-
-
-
-            },
             getChat(){
-                var $this = this;
+                //var $this = this;
 
                 this.$http.get('http://chatservice.dev/api/chat/' + this.chatId)
                     .then(response =>{
@@ -149,8 +115,38 @@
                         });
 
             },
+            startChat(chatId, currentPersonId){
+
+                this.chatId = chatId;
+                this.currentPersonId = currentPersonId;
+
+                if(this.validateChat()){
+                    this.getChat();
+                    this.reloadChat();
+
+                }
+
+            },
             validateChat(){
-                //@todo validate cookies
+                console.log('validating');
+                if (this.validateCookies() && this.validateChatData()){
+                    console.log('yes');
+                    return true;
+                }
+                console.log('no');
+                return false;
+
+            },
+
+            validateCookies(){
+                //@todo validate cookie data that person is correct
+
+                return true;
+            },
+            validateChatData(){
+
+                 return this.chatId && this.currentPersonId;
+
             },
             isUser(person){
                 this.messagePerson = false;
@@ -160,24 +156,26 @@
 
             },
             submitChat(){
-            var chatMessage = this.currentChatMessage;
-            this.currentChatMessage = '';
-                this.$http.post('http://chatservice.dev/api/chatMessage',
-                            {
-                                chat_id: this.chatId,
-                                person_id: this.currentPersonId,
-                                message: chatMessage
-                            })
-                            .then(response =>{
-                                  this.getChat();
-                                }, error => {
-                                    //@todo error handling?
-                                    console.log(error);
-                                });
+                var chatMessage = this.currentChatMessage;
+                console.log(chatMessage, this.currentPersonId, this.chatId);
+                this.currentChatMessage = '';
+                    this.$http.post('http://chatservice.dev/api/chatMessage',
+                                {
+                                    chat_id: this.chatId,
+                                    person_id: this.currentPersonId,
+                                    message: chatMessage
+                                })
+                                .then(response =>{
+                                      this.getChat();
+                                    }, error => {
+                                        //@todo error handling?
+                                        console.log(error);
+                                    });
             },
             reloadChat(){
                 if (!this.reloadChatTimer) {
                     this.reloadChatTimer = setInterval(function(){
+                            console.log('reloadchat');
                             this.getChat();
                         }.bind(this), 5000);
                 }
@@ -189,6 +187,8 @@
 
 
 }
+
+
 
 
 

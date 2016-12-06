@@ -38,7 +38,7 @@ class ChatMessageController extends BaseController
             $this->validate($request, $rules);
         } catch (\Exception $ex) {
             $message = $ex->getMessage();
-            return $this->createErrorResponse($message, 500);
+            return $this->createErrorResponse($message, 422);
         }
 
         return parent::store($request);
