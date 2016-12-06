@@ -64,11 +64,12 @@
 
                         }, error => {
                             //@todo error handling?
-                            console.log(error.body.message);
+                            console.log(error);
                         });
                     }, error => {
+
                         //@todo error handling?
-                        this.setErrorMsg(error.body.message);
+                        this.setErrorMsg(error);
                     });
 
 

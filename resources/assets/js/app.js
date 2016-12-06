@@ -16,7 +16,8 @@ export const dataBus = new Vue({
             messages: [],
             reloadChatTimer: null,
             chatId : null,
-            currentPersonId: null
+            currentPersonId: null,
+            polling: true
 
         }
     },
@@ -40,9 +41,16 @@ export const dataBus = new Vue({
                     }.bind(this), 1); // push to the bottom of the execution stack
                 }, error => {
                     //@todo error handling?
-                    console.log(error.body.message);
+                    this.stopPollingUpdate();
+                    this.polling = false;
+                    console.log(error);
                 });
 
+        },
+
+        stopPollingUpdate(){
+            clearInterval(this.reloadChatTimer);
+            this.$emit('pollingUpdate', false);
         },
 
         scrollBottom(){
@@ -52,8 +60,14 @@ export const dataBus = new Vue({
 
 
         reloadChat(){
+
+            this.getChat();
+
+
             if (!this.reloadChatTimer) {
                 this.reloadChatTimer = setInterval(function () {
+                    this.polling = true;
+                    this.$emit('pollingUpdate', true);
                     this.getChat();
                 }.bind(this), 5000);
             }

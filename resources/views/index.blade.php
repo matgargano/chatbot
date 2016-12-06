@@ -2,9 +2,11 @@
 
 @section('content')
     <div class="container">
-        <div class="jumbotron">
-            <div id="cookie-setter">
-                <cookie-setter></cookie-setter>
+        <div class="row">
+            <div class="col-xs-12">
+                <div id="cookie-setter">
+                    <cookie-setter></cookie-setter>
+                </div>
             </div>
         </div>
     </div>
