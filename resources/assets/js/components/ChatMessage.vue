@@ -19,6 +19,8 @@
 }
 
 
+
+
 </style>
 <template>
 
@@ -29,12 +31,23 @@
     </blockquote>
 </template>
 <script>
+
+    import {dataBus} from "../app";
+
     export default {
 
-        props: ['message', 'currentPersonId'],
+        data(){
+            return{
+                currentPersonId: dataBus.currentPersonId
+            }
+        },
+        props: ['message']
+
 
 
     }
+
+
 
 
 

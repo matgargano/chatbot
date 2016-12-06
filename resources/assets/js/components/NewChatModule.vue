@@ -1,3 +1,10 @@
+<style scoped>
+    .error {
+        color:#FF0000;
+    }
+
+</style>
+
 <template>
     <div>
         <div class="error" v-if="errorMsg">
@@ -17,9 +24,8 @@
            return {
                 email: '',
                 name: '',
-                errorMsg: '',
-                currentPersonId: '',
-                chatId: ''
+                errorMsg: ''
+
 
             }
 
@@ -45,13 +51,15 @@
                     email: this.email
                 })
                 .then(response =>{
-                    this.currentPersonId = response.body.data.id;
-                    this.$cookie.set('person', this.currentPersonId, 1);
+                    dataBus.currentPersonId = response.body.data.id;
+
+                    this.$cookie.set('person', dataBus.currentPersonId, 1);
                     this.$http.post('http://chatservice.dev/api/chat')
                         .then(response =>{
-                                this.chatId = response.body.data.id;
-                                this.$cookie.set('chat', this.chatId, 1);
-                                dataBus.$emit('registeredChat', this.chatId, this.currentPersonId);
+                                dataBus.chatId = response.body.data.id;
+
+                                this.$cookie.set('chat', dataBus.chatId, 1);
+                                dataBus.$emit('registeredChat');
 
                         }, error => {
                             //@todo error handling?
