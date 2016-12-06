@@ -30,7 +30,7 @@ export const dataBus = new Vue({
 
     methods: {
         getChat(){
-            this.$http.get('http://chatservice.dev/api/chat/' + this.chatId)
+            this.$http.get('http://chatservice.dev/api/chats/' + this.chatId)
                 .then(response => {
                     this.messages = response.data.data;
                     this.$emit('chatUpdated', this.messages);

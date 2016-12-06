@@ -36,7 +36,7 @@
             submitChat(){
                 var chatMessage = this.currentChatMessage;
                 this.currentChatMessage = '';
-                    this.$http.post('http://chatservice.dev/api/chatMessage',
+                    this.$http.post('http://chatservice.dev/api/chatMessages',
                                 {
                                     chat_id: dataBus.chatId,
                                     person_id: dataBus.currentPersonId,

@@ -1,13 +1,13 @@
 <?php
 
-Route::resource('chat', 'ChatController', [
+Route::resource('chats', 'ChatController', [
     'except' => ['destroy', 'update', 'edit', 'create']
 ]);
 
-Route::resource('chatMessage', 'ChatMessageController', [
+Route::resource('chatMessages', 'ChatMessageController', [
     'except' => ['destroy', 'update', 'edit', 'create']
 ]);
 
-Route::resource('person', 'PersonController', [
+Route::resource('people', 'PersonController', [
     'except' => ['destroy', 'update', 'edit', 'create']
 ]);
