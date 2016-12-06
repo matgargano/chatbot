@@ -128,12 +128,9 @@
 
             },
             validateChat(){
-                console.log('validating');
                 if (this.validateCookies() && this.validateChatData()){
-                    console.log('yes');
                     return true;
                 }
-                console.log('no');
                 return false;
 
             },
@@ -157,7 +154,6 @@
             },
             submitChat(){
                 var chatMessage = this.currentChatMessage;
-                console.log(chatMessage, this.currentPersonId, this.chatId);
                 this.currentChatMessage = '';
                     this.$http.post('http://chatservice.dev/api/chatMessage',
                                 {
@@ -175,7 +171,6 @@
             reloadChat(){
                 if (!this.reloadChatTimer) {
                     this.reloadChatTimer = setInterval(function(){
-                            console.log('reloadchat');
                             this.getChat();
                         }.bind(this), 5000);
                 }
