@@ -14,7 +14,7 @@ class CreateChatsTable extends Migration
     public function up()
     {
         Schema::create('chats', function (Blueprint $table) {
-            $table->increments('id');
+            $table->increments('id')->unsigned();
             $table->boolean('active')->default(true);
             $table->timestamps();
 

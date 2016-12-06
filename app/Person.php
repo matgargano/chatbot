@@ -16,7 +16,13 @@ class Person extends Model
 
     public function chatMessages()
     {
-        return $this->hasMany(ChatMessage::class, 'chat_id', 'id');
+        return $this->belongsToMany(ChatMessage::class, 'chats', 'id', 'id');
+    }
+
+    public function chat(){
+
+        return $this->belongsToMany(\App\Chat::class);
+
     }
 
 }

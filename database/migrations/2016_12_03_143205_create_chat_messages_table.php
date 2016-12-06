@@ -14,7 +14,7 @@ class CreateChatMessagesTable extends Migration
     public function up()
     {
         Schema::create('chat_messages', function (Blueprint $table) {
-            $table->increments('id');
+            $table->increments('id')->unsigned();
             $table->integer('chat_id')->unsigned();
             $table->integer('person_id')->unsigned();
             $table->text('message');
