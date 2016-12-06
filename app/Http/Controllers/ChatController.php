@@ -33,12 +33,29 @@ class ChatController extends BaseController
     }
 
     /**
+     * Overridden show method for ChatController to get people connected to chat object
+     *
+     * @param  int $id
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        $data = $this->getByIdWithPeopleObjects($id); // pull through people objects
+        if ($data) {
+            return $this->createSuccessResponse($data);
+        }
+
+        return $this->createErrorResponse($this->doesNotExist($id));
+    }
+
+    /**
      * Get chat by ID
      * @param $id
      *
      * @return mixed
      */
-    protected function getById($id)
+    protected function getByIdWithPeopleObjects($id)
     {
         $messages = call_user_func(array($this->model, 'find'), $id)->chatMessages()->with('person')->getResults();
         return $messages;
