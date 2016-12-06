@@ -46,6 +46,10 @@
                     this.setErrorMsg('Please fill out both fields');
                     return;
                 }
+                if(!this.validateEmail(this.email)){
+                    this.setErrorMsg('Please set a valid email address');
+                    return;
+                }
 
                 this.$http.post(dataBus.apiBase + '/people', {
                     name: this.name,
@@ -76,7 +80,12 @@
 
 
 
+            },
+            validateEmail(email) {
+                var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+                return re.test(email);
             }
+
 
 
 
