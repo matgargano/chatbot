@@ -17,12 +17,13 @@ export const dataBus = new Vue({
             reloadChatTimer: null,
             chatId : null,
             currentPersonId: null,
-            polling: true
+            polling: true,
+            apiBase: window.apiBase,
 
         }
     },
     created(){
-
+        console.log(this.apiBase);
         this.$on('registeredChat', () => {
 
             this.startChat();
@@ -32,7 +33,7 @@ export const dataBus = new Vue({
 
     methods: {
         getChat(){
-            this.$http.get('http://chatservice.dev/api/chats/' + this.chatId)
+            this.$http.get(dataBus.apiBase + '/chats/' + this.chatId)
                 .then(response => {
                     this.messages = response.data.data;
                     this.$emit('chatUpdated', this.messages);

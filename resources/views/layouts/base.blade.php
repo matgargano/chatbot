@@ -23,6 +23,10 @@
             'csrfToken' => csrf_token(),
     ]); ?>
 </script>
+<script>
+    var apiBase;
+    @if($api_base)apiBase = '{{ $api_base }}';@endif
+</script>
 <script src="js/app.js"></script>
 </body>
 </html>

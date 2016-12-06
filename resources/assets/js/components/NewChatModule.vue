@@ -47,7 +47,7 @@
                     return;
                 }
 
-                this.$http.post('http://chatservice.dev/api/people', {
+                this.$http.post(dataBus.apiBase + '/people', {
                     name: this.name,
                     email: this.email
                 })
@@ -55,7 +55,7 @@
                     dataBus.currentPersonId = response.body.data.id;
 
                     this.$cookie.set('person', dataBus.currentPersonId, 1);
-                    this.$http.post('http://chatservice.dev/api/chats')
+                    this.$http.post(dataBus.apiBase + '/chats')
                         .then(response =>{
                                 dataBus.chatId = response.body.data.id;
 

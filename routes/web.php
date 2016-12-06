@@ -12,5 +12,7 @@
 */
 
 Route::get('/', function () {
-    return view('index');
+    $context = [];
+    $context['api_base'] = env('API_BASE', 'http://chat.matgargano.com');
+    return view('index', $context);
 });
