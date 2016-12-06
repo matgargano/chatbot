@@ -4,6 +4,7 @@
     <div class="container">
         <div class="row">
             <div class="col-xs-12">
+                <h1>Support site</h1>
                 <div id="cookie-setter">
                     <cookie-setter></cookie-setter>
                 </div>

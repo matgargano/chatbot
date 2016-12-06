@@ -64,4 +64,32 @@ class PersonController extends BaseController
         return $this->createSuccessResponse($objects);
 
     }
+
+    public function update(Request $request, $id)
+    {
+
+        $object = $this->getById($id);
+        $rules  = [
+            'name' => 'required',
+
+        ];
+        try {
+            $this->validate($request, $rules);
+        } catch (\Exception $ex) {
+            $message = $ex->getMessage();
+
+            return $this->createErrorResponse($message, 500);
+        }
+
+        if ($object) {
+            $object->name = $request->name;
+            $object->save();
+            return $this->createSuccessResponse( $object );
+
+
+        }
+
+        return $this->createErrorResponse($this->doesNotExist($id), 404);
+
+    }
 }

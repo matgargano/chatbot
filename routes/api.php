@@ -9,5 +9,5 @@ Route::resource('chatMessages', 'ChatMessageController', [
 ]);
 
 Route::resource('people', 'PersonController', [
-    'except' => ['destroy', 'update', 'edit', 'create']
+    'except' => ['destroy', 'edit', 'create']
 ]);
